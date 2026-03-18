@@ -1,22 +1,26 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Pokemon {
+  name: string;
+  type: string;
+  level: number;
+  nature: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class PokemonserviceService {
+export class PokemonService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost"3000/api/pokemon';
+  private apiUrl = 'http://localhost:3000/pokemon';
 
-  //state management  using signals
-  pokemonList = signal<any[]>([]);
-  
-  fetchPokemon(){
-    this.http.get<any[]>(this.apiUrl).subscribe(data=>this.pokemonList.set(data))
+  addPokemon(pokemon: Pokemon): Observable<Pokemon> {
+    return this.http.post<Pokemon>(this.apiUrl, pokemon);
   }
 
-  savePokemon(data: any){
-    return this.http.post(this.apiUrl, data);
+  getPokemons(): Observable<Pokemon[]> {
+    return this.http.get<Pokemon[]>(this.apiUrl);
   }
-
 }

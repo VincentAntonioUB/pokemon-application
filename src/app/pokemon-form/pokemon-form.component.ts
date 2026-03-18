@@ -1,33 +1,44 @@
-import { Component } from '@angular/core';
-import { ChangeDetectionStrategy, inject,} from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms'
-import { PokemonserviceService } from '../pokemonservice.service';
+import { Component, signal, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Pokemon, PokemonService } from '../pokemonservice.service';
 
 @Component({
   selector: 'app-pokemon-form',
-  imports: [ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './pokemon-form.component.html',
-  styleUrl: './pokemon-form.component.css'
+  styleUrls: ['./pokemon-form.component.css']
 })
-export class PokemonFormComponent {
+export class PokemonFormComponent implements OnInit {
+  pokemonService = inject(PokemonService);
+  fb = inject(FormBuilder);
+  pokemonForm = signal<FormGroup | null>(null);  // ✅ Initially null
+  pokemons = signal<Pokemon[]>([]);
 
-  private formBuilder = inject(FormBuilder);
-  pokemonservice = inject(PokemonserviceService);
+  ngOnInit() {
+    // ✅ Create form AFTER inject() works
+    this.pokemonForm.set(this.fb.group({
+      name: ['', Validators.required],
+      type: ['', Validators.required],
+      level: [1, [Validators.required, Validators.min(1)]],  // ✅ Default 1
+      nature: ['', Validators.required]
+    }));
 
-  pokemonForm = this.formBuilder.nonNullable.group({
-    name: ['', Validators.required],
-    type: ['', Validators.required],
-    level: ['', Validators.required],
-    nature: ['', Validators.required],
-  })
-
-  onSubmit(){
-    if(this.pokemonForm.valid){
-      this.pokemonservice.savePokemon(this.pokemonForm.getRawValue()).subscribe(() => {
-        this.pokemonservice.fetchPokemon(); //refreshes data
-        this.pokemonForm.reset(); // clear form
-      })
-    }
+    // Load existing Pokemon
+    this.pokemonService.getPokemons().subscribe((pokemons: Pokemon[]) => {
+      this.pokemons.set(pokemons);
+    });
   }
 
+  addPokemon() {
+    if (this.pokemonForm()?.valid) {
+      this.pokemonService.addPokemon(this.pokemonForm()!.value).subscribe(() => {
+        this.pokemons.update(pokemons => [...pokemons, this.pokemonForm()!.value]);
+        this.pokemonForm.set(this.fb.group({
+          name: '', type: '', level: 1, nature: ''
+        }));
+      });
+    }
+  }
 }

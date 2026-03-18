@@ -1,0 +1,156 @@
+:host {
+  display: block;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: #fdfdfd;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Headers with a "Master Ball" aesthetic */
+h1, h2 {
+  color: #7f00ff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #7f00ff, #7f00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Form Styling */
+form {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid #eee;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin: 15px 0;
+  padding: 14px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: white;
+}
+
+input:focus {
+  border-color: #7f00ff;
+  outline: none;
+  box-shadow: 0 0 12px rgba(255, 28, 28, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Hide number arrows as requested */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* The "Battle" Button */
+button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px;
+  background: linear-gradient(45deg, #7f00ff, #7f00ff);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  background: #dcdcdc;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Gary's Winning Team - Gradient Glassmorphism */
+.winning-team {
+  margin-top: 50px;
+  padding: 30px;
+  background: linear-gradient(135deg, #7f00ff, #7f00ff); /* Darker, more elite vibe */
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.winning-team h2 {
+  background: linear-gradient(90deg, #fff, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Pokemon Individual Cards */
+.pokemon-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 18px 25px;
+  margin: 15px 0;
+  border-radius: 15px;
+  transition: transform 0.2s ease;
+  border-left: 6px solid #7f00ff;
+}
+
+.pokemon-card:hover {
+  transform: translateX(10px);
+}
+
+.pokemon-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pokemon-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #222;
+  text-transform: capitalize;
+}
+
+.pokemon-details {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Level Badge */
+.level-badge {
+
+  
+  /* Reset colors to match standard text */
+  color: black; 
+  padding: 0;
+  
+  /* Match the font size and style of your .pokemon-details */
+  font-size: 0.9rem;
+  font-weight: normal; 
+  font-style: italic;
+  
+  /* Optional: add a little spacing if it's on the same line */
+  margin-left: 5px;
+}
